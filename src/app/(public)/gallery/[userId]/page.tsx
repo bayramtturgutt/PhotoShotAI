@@ -1,13 +1,18 @@
+import { NextPage, GetServerSideProps } from "next";
 import GalleryPage from "@/components/pages/GalleryPage";
 import db from "@/core/db";
-import { Metadata } from "next";
+import { Shot } from "@/types"; // Assuming you have Shot type defined
 
-export const metadata: Metadata = {
-  title: "Gallery",
+interface GalleryProps {
+  shots: Shot[];
+}
+
+const Gallery: NextPage<GalleryProps> = ({ shots }) => {
+  return <GalleryPage shots={shots} />;
 };
 
-const Gallery = async ({ params }: { params: { userId: string } }) => {
-  const userId = params.userId;
+export const getServerSideProps: GetServerSideProps<GalleryProps> = async ({ params }) => {
+  const userId = params?.userId as string;
 
   const shots = await db.shot.findMany({
     select: { outputUrl: true, blurhash: true },
@@ -23,7 +28,7 @@ const Gallery = async ({ params }: { params: { userId: string } }) => {
     },
   });
 
-  return <GalleryPage shots={shots} />;
+  return { props: { shots } };
 };
 
 export default Gallery;

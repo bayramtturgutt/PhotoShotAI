@@ -1,29 +1,47 @@
 {
+  // Compiler options configuration
   "compilerOptions": {
+    // Target ECMAScript version
     "target": "es5",
+    // Available libraries
     "lib": ["dom", "dom.iterable", "esnext"],
+    // Allow JavaScript files
     "allowJs": true,
+    // Skip type checking of declaration files
     "skipLibCheck": true,
+    // Enable strict mode
     "strict": true,
+    // Ensure consistent casing in file names
     "forceConsistentCasingInFileNames": true,
+    // Do not emit output files
     "noEmit": true,
+    // Enable interoperability between CommonJS and ES6 modules
     "esModuleInterop": true,
+    // Module system
     "module": "esnext",
+    // Module resolution strategy
     "moduleResolution": "node",
+    // Enable resolving JSON module imports
     "resolveJsonModule": true,
+    // Treat each file as a separate module
     "isolatedModules": true,
+    // JSX handling mode
     "jsx": "preserve",
+    // Enable incremental compilation
     "incremental": true,
+    // Path mapping for module resolution
     "paths": {
       "@/*": ["./src/*"]
     },
+    // Compiler plugins
     "plugins": [
       {
         "name": "next"
       }
     ]
   },
+  // Files to include in compilation
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  // Directories/files to exclude from compilation
   "exclude": ["node_modules"]
 }
- 

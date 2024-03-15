@@ -1,24 +1,31 @@
-version: "3"
+version: "3.8"  # Updated to the latest supported version
 
 services:
   postgres:
     image: postgres:14
     restart: always
     environment:
-      POSTGRES_USER: photoshot
-      POSTGRES_PASSWORD: photoshot
-      POSTGRES_DB: photoshot
+      POSTGRES_USER: ${POSTGRES_USER:-photoshot}  # Use default if not provided externally
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-photoshot}  # Use default if not provided externally
+      POSTGRES_DB: ${POSTGRES_DB:-photoshot}  # Use default if not provided externally
     ports:
-      - 5432:5432
+      - "5432:5432"
     volumes:
-      - postgresql:/var/lib/postgresql
-      - postgresql_data:/var/lib/postgresql/data
+      - postgresql:/var/lib/postgresql/data
+    networks:
+      - photoshot_network  # Creating a dedicated network for communication
 
   maildev:
     image: djfarrelly/maildev
     ports:
       - "1080:80"
       - "25:25"
+    networks:
+      - photoshot_network  # Connecting to the same network as postgres for easy communication
+
 volumes:
   postgresql:
-  postgresql_data:
+
+networks:
+  photoshot_network:  # Defining a network for services to communicate
+    driver: bridge  # Using bridge driver for simplicity and compatibility
